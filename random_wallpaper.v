@@ -1,14 +1,15 @@
 module main
 
 import os
+import os.cmdline
 import rand.util
 import x.json2
 
 fn main() {
 	mut files := []string{cap: 256}
+	quiet := '-q' in os.args
 
-	mut dirs := os.args.clone()
-	dirs.delete(0)
+	mut dirs := cmdline.only_non_options(os.args[1..])
 	if dirs.len == 0 {
 		dirs << '.'
 	}
@@ -24,11 +25,17 @@ fn main() {
 
 	for selected in util.sample_nr(files, 2) {
 		if selected != current {
-			print('Setting wallpaper to "$selected"…')
+			if !quiet {
+				print('Setting wallpaper to "$selected"…')
+			}
 			if os.execute('painter set "$selected"').exit_code == 0 {
-				println(' OK!')
+				if !quiet {
+					println(' OK!')
+				}
 			} else {
-				println(' Error!')
+				if !quiet {
+					println(' Error!')
+				}
 			}
 			break
 		}
