@@ -5,3 +5,4 @@
   - [ ] Option for default director(y|ies)
 - [ ] Add command-line help
 - [ ] Add verbose error output
+- [ ] Locking?
