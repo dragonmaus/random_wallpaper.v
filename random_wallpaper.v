@@ -6,7 +6,7 @@ import rand.util
 import x.json2
 
 fn main() {
-	mut files := []string{cap: 256}
+	mut files := []string{cap: 1024}
 	quiet := '-q' in os.args
 
 	mut dirs := cmdline.only_non_options(os.args[1..])
