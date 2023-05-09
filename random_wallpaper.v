@@ -3,7 +3,7 @@ module main
 import os
 import os.cmdline
 import rand
-import x.json2
+import regex
 
 fn main() {
 	mut files := []string{cap: 1024}
@@ -21,7 +21,9 @@ fn main() {
 		})
 	}
 
-	current := json2.raw_decode(os.execute('painter get').output)! as string
+	mut re := regex.regex_opt(r'\\(.)')!
+	current := re.replace(os.execute('painter get').output
+		.trim_string_left('"').trim_string_right('"'), '\0')
 
 	for selected in rand.sample(files, 2) {
 		if selected != current {
