@@ -2,7 +2,7 @@ module main
 
 import os
 import os.cmdline
-import rand.util
+import rand
 import x.json2
 
 fn main() {
@@ -21,14 +21,14 @@ fn main() {
 		})
 	}
 
-	current := json2.raw_decode(os.execute('painter get').output) ? as string
+	current := json2.raw_decode(os.execute('painter get').output)! as string
 
-	for selected in util.sample_nr(files, 2) {
+	for selected in rand.sample(files, 2) {
 		if selected != current {
 			if !quiet {
-				print('Setting wallpaper to "$selected"…')
+				print('Setting wallpaper to "${selected}"...')
 			}
-			if os.execute('painter set "$selected"').exit_code == 0 {
+			if os.execute('painter set "${selected}"').exit_code == 0 {
 				if !quiet {
 					println(' OK!')
 				}
